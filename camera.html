@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera Example</title>
+    <style>
+        #preview {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Camera Example</h1>
+    <button onclick="captureImage()">Take Picture</button>
+    <br><br>
+    <img id="preview" src="" alt="Preview Image">
+    
+    <script>
+        function captureImage() {
+            // Check if the browser supports the WebRTC API (getUserMedia)
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // Access the user's camera
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        var video = document.createElement('video');
+                        var preview = document.getElementById('preview');
+                        
+                        // Display the video stream in a video element
+                        video.srcObject = stream;
+                        video.autoplay = true;
+                        
+                        // Create a canvas element to capture the image
+                        var canvas = document.createElement('canvas');
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        
+                        // Capture the image from the video stream
+                        setTimeout(function() {
+                            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                            var imageSrc = canvas.toDataURL('image/png');
+                            preview.src = imageSrc;
+                            
+                            // Stop the video stream
+                            stream.getTracks().forEach(function(track) {
+                                track.stop();
+                            });
+                        }, 1000);
+                    })
+                    .catch(function(error) {
+                        console.error('Error accessing the camera: ', error);
+                    });
+            } else {
+                alert('This browser does not support the WebRTC API');
+            }
+        }
+    </script>
+</body>
+</html>
