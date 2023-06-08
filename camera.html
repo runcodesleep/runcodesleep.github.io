@@ -2,12 +2,20 @@
 <html>
   <head>
     <title>Camera Upload</title>
+    <style>
+      #preview {
+        max-width: 100%;
+        max-height: 80vh;
+      }
+    </style>
   </head>
   <body>
     <input type="file" accept="image/*" capture="camera" id="cameraInput" />
     <button onclick="captureImage()">Take Picture</button>
     <br><br>
-    <img id="preview" src="" alt="Preview Image" />
+    <div id="previewContainer">
+      <img id="preview" src="" alt="Preview Image" />
+    </div>
 
     <script>
       function captureImage() {
@@ -23,11 +31,30 @@
           reader.onload = function(e) {
             const previewImage = document.getElementById('preview');
             previewImage.src = e.target.result;
+            adjustImageSize();
           };
 
           reader.readAsDataURL(file);
         }
       });
+
+      function adjustImageSize() {
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('preview');
+        const aspectRatio = previewImage.naturalWidth / previewImage.naturalHeight;
+        const containerWidth = previewContainer.clientWidth;
+        const containerHeight = previewContainer.clientHeight;
+        let newWidth = containerWidth;
+        let newHeight = newWidth / aspectRatio;
+
+        if (newHeight > containerHeight) {
+          newHeight = containerHeight;
+          newWidth = newHeight * aspectRatio;
+        }
+
+        previewImage.style.width = newWidth + 'px';
+        previewImage.style.height = newHeight + 'px';
+      }
     </script>
   </body>
 </html>
