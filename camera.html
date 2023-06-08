@@ -3,6 +3,24 @@
   <head>
     <title>Camera Upload</title>
     <style>
+      #title {
+        text-align: center;
+        font-size: 24px;
+        margin-top: 20px;
+      }
+
+      #cameraButton {
+        display: block;
+        margin: 20px auto;
+        padding: 12px 24px;
+        font-size: 18px;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+
       #preview {
         max-width: 100%;
         max-height: 80vh;
@@ -10,8 +28,9 @@
     </style>
   </head>
   <body>
+    <h1 id="title">Welcome, make a photo</h1>
     <input type="file" accept="image/*" capture="camera" id="cameraInput" />
-    <button onclick="captureImage()">Take Picture</button>
+    <button id="cameraButton" onclick="captureImage()">Take Picture</button>
     <br><br>
     <div id="previewContainer">
       <img id="preview" src="" alt="Preview Image" />
