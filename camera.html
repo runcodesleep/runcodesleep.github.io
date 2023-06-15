@@ -25,11 +25,15 @@
         max-width: 100%;
         max-height: 80vh;
       }
+
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <h1 id="title">Welcome, make a photo</h1>
-    <input type="file" accept="image/*" capture="camera" id="cameraInput" />
+    <input type="file" accept="image/*" capture="camera" id="cameraInput" class="hidden" />
     <button id="cameraButton" onclick="captureImage()">Take Picture</button>
     <br><br>
     <div id="previewContainer">
